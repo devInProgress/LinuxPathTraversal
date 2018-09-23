@@ -50,7 +50,7 @@ const getFinalDirectory = (commandContents) => {
   }
   return [i, dirs, directory];
 }
-
+//function to remove a directory
 const removeDirectory = (commandContents) => {
   const result = getFinalDirectory(commandContents);
   const currentDirectory = currentDirectoryPaths[pwd];
@@ -63,7 +63,7 @@ const removeDirectory = (commandContents) => {
     console.log('ERR: DIRECTORY DOESN\'T EXIST');
   }
 }
-
+//function to implement ls
 const showDirectories = () => {
   const directories = currentDirectoryPaths[pwd];
   let dirString = '';
@@ -72,7 +72,7 @@ const showDirectories = () => {
   });
   console.log('DIRS: ', dirString);
 }
-
+//function to implement cd
 const changeDirectory = (commandContents) => {
   if (commandContents[2] == '/') {
     pwd = '/';
@@ -87,7 +87,7 @@ const changeDirectory = (commandContents) => {
     }
   }
 }
-
+//function to implement pwd
 const showPresentWorkingDirectory = () => {
   if (pwd != '/') {
     pwd = '/' + pwd;
