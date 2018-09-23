@@ -9,7 +9,6 @@ const application = () => {
   rl.write('> ');
   rl.on('line', (command) => {
     const commandContents = command.split(" ");
-    console.log(commandContents);
     let operation = commandContents[1];
     switch (operation) {
       case 'mkdir':
@@ -17,9 +16,6 @@ const application = () => {
         break;
       case 'rm': 
         controllers.removeDirectory(commandContents);
-        break;
-      case 's':
-        controllers.showContents();
         break;
       case 'cd':
         controllers.changeDirectory(commandContents);

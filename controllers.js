@@ -4,6 +4,7 @@ let currentDirectoryPaths = {};
 let pwd = '/';
 
 //the app's functions
+// function to make a directory
 const makeDirectory = (commandContents) => {
   const numberOfDirectories = commandContents.length - 2;
   let counter = 0, result = 0;
@@ -20,6 +21,7 @@ const getKey = (obj) => {
   return Object.keys(obj)[0];
 }
 
+//function to clear session
 const clearSession = () => {
   currentDirectories = [];
   currentDirectoryPaths = {};
@@ -27,11 +29,11 @@ const clearSession = () => {
   console.log('SUCC: CLEARED: RESET TO ROOT');
 }
 
+//function to get the directory
 const getFinalDirectory = (commandContents) => {
   let pwdDuplicate = pwd, i = 0, directory = '';
   let pwdArray = currentDirectoryPaths[pwdDuplicate];
   let dirs = commandContents[2].split('/');
-  console.log(dirs);
   for (i = 0; i < dirs.length; i++) {
     if (dirs[i] == '') {
       continue;
@@ -71,11 +73,6 @@ const showDirectories = () => {
   console.log('DIRS: ', dirString);
 }
 
-const showContents = () => {
-  console.log('Directories: ', currentDirectories);
-  console.log('\nDirectoryPaths: ', currentDirectoryPaths);
-}
-
 const changeDirectory = (commandContents) => {
   if (commandContents[2] == '/') {
     pwd = '/';
@@ -113,7 +110,6 @@ const makeDirectoryHelper = (nameOfDirectory) => {
 }
 
 module.exports = {
-  showContents,
   removeDirectory,
   makeDirectory,
   showPresentWorkingDirectory,

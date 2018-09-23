@@ -1,0 +1,17 @@
+This is A Node.js terminal application
+
+start.js is the main file.
+
+Please run "npm i" before running app
+
+then run "node start.js"
+
+All the commands have been implemented successfully
+
+Some limitations
+
+cd works for absolute paths like cd dir1 or cd dir2, but not for relative paths like cd dir1/dir2 due to limitation of time it could not be implemented
+
+Please go through the screenshot, contains a dry run of the application, as well as you can refer to it if some command is not running, you can follow the order mentioned in the screenshot and you will definitely get it, since all the commands have been implemented.
+
+Thank you.
