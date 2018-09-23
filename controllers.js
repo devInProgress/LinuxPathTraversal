@@ -6,12 +6,12 @@ let pwd = '/';
 //the app's functions
 const makeDirectory = (commandContents) => {
   const numberOfDirectories = commandContents.length - 2;
-  let counter = 0;
+  let counter = 0, result = 0;
   while (counter < numberOfDirectories) {
-    makeDirectoryHelper(commandContents[counter + 2]);
+    result = makeDirectoryHelper(commandContents[counter + 2]);
     counter++;
   }
-  if (counter == numberOfDirectories) {
+  if (counter == numberOfDirectories && result != -1) {
     console.log('SUCC: CREATED');
   }
 }
@@ -30,12 +30,14 @@ const clearSession = () => {
 const getFinalDirectory = (commandContents) => {
   let pwdDuplicate = pwd, i = 0, directory = '';
   let pwdArray = currentDirectoryPaths[pwdDuplicate];
-  for (i = 2; i < commandContents.length; i++) {
-    if (commandContents[i] == '/') {
+  let dirs = commandContents[2].split('/');
+  console.log(dirs);
+  for (i = 0; i < dirs.length; i++) {
+    if (dirs[i] == '') {
       continue;
     }
     const result = _.find(pwdArray, (path) => {
-      return _.has(path, commandContents[i]);
+      return _.has(path, dirs[i]);
     });
     if (result) {
       directory = getKey(result);
@@ -44,15 +46,15 @@ const getFinalDirectory = (commandContents) => {
       break;
     }
   }
-  return [i, directory];
+  return [i, dirs, directory];
 }
 
 const removeDirectory = (commandContents) => {
   const result = getFinalDirectory(commandContents);
   const currentDirectory = currentDirectoryPaths[pwd];
-  if (result[1]) {
+  if (result[2]) {
     _.remove(currentDirectory, dir => {
-      return _.has(dir, result[1]);
+      return _.has(dir, result[2]);
     });
     console.log('SUCC: DELETED');
   } else {
@@ -74,18 +76,15 @@ const showContents = () => {
   console.log('\nDirectoryPaths: ', currentDirectoryPaths);
 }
 
-const initializeStartDirectory = () => {
-}
-
 const changeDirectory = (commandContents) => {
   if (commandContents[2] == '/') {
     pwd = '/';
     console.log('SUCC: REACHED');
   } else {
     const result = getFinalDirectory(commandContents);
-    if (result[0] == commandContents.length) {
+    if (result[0] == result[1].length) {
       console.log('SUCC: REACHED');
-      pwd = result[1];
+      pwd = result[2];
     } else {
       console.log('ERR: INVALID PATH');
     }
@@ -102,6 +101,7 @@ const showPresentWorkingDirectory = () => {
 const makeDirectoryHelper = (nameOfDirectory) => {
   if (_.includes(currentDirectories, nameOfDirectory)) {
     console.log('ERR: DIRECTORY ALREADY EXISTS');
+    return -1;
   } else {
     currentDirectories.push(nameOfDirectory);
     // currentDirectoryPaths.push({ [pwd]: { [nameOfDirectory]: 'empty subdirectory' } });
